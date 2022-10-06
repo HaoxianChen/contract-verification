@@ -1,5 +1,6 @@
 // source: https://github.com/eth-sri/verx-benchmarks/blob/master/overview/main.sol
 
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Escrow {

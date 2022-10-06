@@ -107,7 +107,7 @@ contract VestingWallet is Context {
     }
 
   function earlyRelease() public view {
-    assert(released() == 0 || block.timestamp > start());
+    assert(released() == 0 || block.timestamp >= start());
     // assert(released() == 0 );
   }
 }

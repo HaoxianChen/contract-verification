@@ -553,9 +553,10 @@ contract ERC777 is Context, IERC777, IERC20 {
     ) internal virtual {}
 
     function operatorConsistency(address p, address o) public view {
-        assert( !_operators[p][o]  ||
-              !(_defaultOperators[o] && _revokedDefaultOperators[p][o])
-              );
+        // assert( !_operators[p][o]  ||
+        //       !(_defaultOperators[o] && _revokedDefaultOperators[p][o])
+        //       );
+      assert( ! (_operators[p][o] && _defaultOperators[o])); 
     }
 
 }
