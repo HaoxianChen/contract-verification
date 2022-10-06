@@ -33,7 +33,7 @@ contract Wallet {
       int n = totalSupply.n;
       return n;
   }
-  function burn(address p,int amount) public  checkViolations  {
+  function burn(address p,int amount) public  {
       bool r4 = updateBurnOnInsertRecv_burn_r4(p,amount);
       if(r4==false) {
         revert("Rule condition failed");
@@ -44,34 +44,34 @@ contract Wallet {
       int n = balanceOfTuple.n;
       return n;
   }
-  function mint(address p,int amount) public  checkViolations  {
+  function mint(address p,int amount) public  {
       bool r11 = updateMintOnInsertRecv_mint_r11(p,amount);
       if(r11==false) {
         revert("Rule condition failed");
       }
   }
-  function transfer(address from,address to,int amount) public  checkViolations  {
+  function transfer(address from,address to,int amount) public  {
       bool r2 = updateTransferOnInsertRecv_transfer_r2(from,to,amount);
       if(r2==false) {
         revert("Rule condition failed");
       }
   }
-  function checkNegativeBalance() private    {
-      uint N = negativeBalanceKeyArray.length;
-      for(uint i = 0; i<N; i = i+1) {
-          NegativeBalanceKeyTuple memory negativeBalanceKeyTuple = negativeBalanceKeyArray[i];
-          NegativeBalanceTuple memory negativeBalanceTuple = negativeBalance[negativeBalanceKeyTuple.p];
-          assert(!negativeBalanceTuple._valid);
-          // if(negativeBalanceTuple._valid==true) {
-          //   revert("negativeBalance");
-          // }
-      }
-  }
-  modifier checkViolations() {
-      // Empty()
-      _;
-      checkNegativeBalance();
-  }
+  // function checkNegativeBalance() private    {
+  //     uint N = negativeBalanceKeyArray.length;
+  //     for(uint i = 0; i<N; i = i+1) {
+  //         NegativeBalanceKeyTuple memory negativeBalanceKeyTuple = negativeBalanceKeyArray[i];
+  //         NegativeBalanceTuple memory negativeBalanceTuple = negativeBalance[negativeBalanceKeyTuple.p];
+  //         assert(!negativeBalanceTuple._valid);
+  //         if(negativeBalanceTuple._valid==true) {
+  //           revert("negativeBalance");
+  //         }
+  //     }
+  // }
+  // modifier checkViolations() {
+  //     // Empty()
+  //     _;
+  //     checkNegativeBalance();
+  // }
   function updateNegativeBalanceOnDeleteBalanceOf_r7(address p,int n) private    {
       if(n<0 && p!=address(0)) {
         NegativeBalanceTuple memory negativeBalanceTuple = negativeBalance[p];
