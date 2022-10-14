@@ -55,7 +55,6 @@ contract Wallet {
     }
     
     function totalSupply() public view returns(int) {
-        assert(_totalSupply==totalBalance);
         return _totalSupply;
     }
     
