@@ -18,25 +18,32 @@ def get_vars(f):
     return r
 
 def get_clause(body,head):
-    all_vars = list(get_vars(body))
-    return z3.ForAll(all_vars, z3.Implies(body, head))
+    # all_vars = list(get_vars(body))
+    # return z3.ForAll(all_vars, z3.Implies(body, head))
+    return z3.Implies(body, head)
 
 
 def prove(f):
     s = z3.Solver()
     s.add(z3.Not(f))
-    if s.check() == z3.unsat:
+    result = s.check()
+    if result == z3.unsat:
         print ("proved")
     else:
-        print ("failed to prove")
+        print ("failed to prove: ", result)
+        print (f)
+        print (s.model())
     return s
 
-def prove_inductive(_ts, _property):
+def prove_inductive(_ts, _property, lemma = None):
     # The verification conitions from TS.
     f1 = get_clause(_ts.Init, _property)
     print ("Prove init => property.")
     prove(f1)
-    f2 = get_clause(z3.And(_property, _ts.Tr), _ts.to_post(_property))
+    if (lemma != None):
+        f2 = get_clause(z3.And(_property, _ts.Tr, lemma), _ts.to_post(_property))
+    else:
+        f2 = get_clause(z3.And(_property, _ts.Tr), _ts.to_post(_property))
     print ("Prove property is inductive.")
     prove(f2)
     
