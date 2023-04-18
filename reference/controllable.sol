@@ -32,7 +32,7 @@ contract Controllable is ERC20 {
                                 onlyController {
         _burn(_tokenHolder, _value);
         emit ControllerRedemption(msg.sender, _tokenHolder, _value);
-        totalBalance -= value;
+        totalBalance -= _value;
      }
 
 
