@@ -32,14 +32,14 @@ contract SimpleAuction {
     // is asked to confirm a transaction or
     // when an error is displayed.
 
-    // /// The auction has already ended.
-    // error AuctionAlreadyEnded();
-    // /// There is already a higher or equal bid.
-    // error BidNotHighEnough(uint highestBid);
-    // /// The auction has not ended yet.
-    // error AuctionNotYetEnded();
-    // /// The function auctionEnd has already been called.
-    // error AuctionEndAlreadyCalled();
+    /// The auction has already ended.
+    error AuctionAlreadyEnded();
+    /// There is already a higher or equal bid.
+    error BidNotHighEnough(uint highestBid);
+    /// The auction has not ended yet.
+    error AuctionNotYetEnded();
+    /// The function auctionEnd has already been called.
+    error AuctionEndAlreadyCalled();
 
     mapping(address=>uint) withdrawCount;
 
@@ -128,8 +128,7 @@ contract SimpleAuction {
 
         // 1. Conditions
         if (block.timestamp < auctionEndTime)
-            // revert AuctionNotYetEnded();
-            revert; 
+            revert AuctionNotYetEnded();
         if (ended)
             revert AuctionEndAlreadyCalled();
 
